@@ -1,0 +1,51 @@
+<title>Amebo Test Page</title>
+<head>
+	<script src="amebo.js"></script>
+	<script src="iosJSnode.js"></script>
+	<style>
+	#gameboy {
+		image-rendering: -moz-crisp-edges;
+		image-rendering: -o-crisp-edges;
+		image-rendering: -webkit-optimize-contrast;
+		image-rendering: optimize-contrast;
+		-ms-interpolation-mode: nearest-neighbor;
+	}
+	</style>
+</head>
+<body onload="gameboy = new gb('default.gbc', document.getElementById('gameboy'));">
+	<canvas id="gameboy" width="320" height="288"></canvas>
+	<br>
+	ROM File:
+	<input type="file" id="file"></input><br>
+	Load Battery:
+	<input type="file" id="file2"></input>
+	
+	<script>
+		function loadROMfileReader(evt) {
+			var file = evt.target.files[0];
+			var reader = new FileReader();
+			reader.onload = (function(theFile) {
+				return function(e) {
+					gameboy.loadROMBuffer(e.target.result);
+				};
+			})(file);
+			reader.readAsArrayBuffer(file);
+		}
+
+		function loadBatteryfileReader(evt) {
+			var file = evt.target.files[0];
+			var reader = new FileReader();
+			reader.onload = (function(theFile) {
+				return function(e) {
+					var CRAM = gameboy.scopeEval("CRAM");
+					CRAM.set(new Uint8Array(e.target.result.slice(0, CRAM.length)));
+					gameboy.scopeEval("saveBattery(); reset();");
+				};
+			})(file);
+			reader.readAsArrayBuffer(file);
+		}
+
+		document.getElementById("file").addEventListener('change', loadROMfileReader, false);
+		document.getElementById("file2").addEventListener('change', loadBatteryfileReader, false);
+	</script>
+</body>

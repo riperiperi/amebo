@@ -5,8 +5,6 @@ window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
 	alert(errorMsg+" on line "+lineNumber);
 }
 
-window.ultraDebug = 0;
-
 window.GBMasterClass = function() {
 
 	var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
@@ -1672,7 +1670,6 @@ window.gb = function(file, canvas, options) {
 	MBCWriteHandlers[5] = function(w, v){
 		if (w < 0x2000) {
 			MBC.RAMenable = ((v&0xF) == 0xA);
-			if (!(MBC.RAMenable)) MBC.RAMbank = 0;
 		} else if (w < 0x3000) {
 			MBC.ROMbank = (MBC.ROMbank&0x100)|v
 		} else if (w < 0x4000) {

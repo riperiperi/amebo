@@ -3,7 +3,7 @@ amebo
 
 Frontend: http://amebo-emu.tk
 
-amebo is a javascript Gameboy emulator (DMG/GBC). The future focus is to improve accuracy and clean up the API while maintaining solid performance on relevant devices.
+amebo is a javascript Gameboy Colour emulator (DMG/GBC). The future focus is to improve accuracy and clean up the API while maintaining solid performance on relevant devices.
 
 ## Using amebo
 

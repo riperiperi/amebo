@@ -39,7 +39,7 @@ gameboyObj.prepareButtonByte(); //called internally to generate the next input. 
 - Saves using localStorage
 - Cycle Accurate Instruction Timings
 - Realtime audio emulation using the Web Audio API
-- Mobile Client: http://amebo-emu.tk/m , runs full speed on iPhone 5 and up
+- Mobile Client: http://amebo-emu.tk/mobile/ , runs full speed on iPhone 5 and up
 - RUNS POKEMON! (obviously the most important feature)
 
 ## In future:

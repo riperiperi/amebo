@@ -66,7 +66,7 @@ window.gb = function(file, canvas, options) {
 
 	this.loadROM = function(url, pauseAfter) {
 		var loadfile = new XMLHttpRequest();
-		loadfile.open("POST", url);
+		loadfile.open("GET", url);
 		loadfile.responseType = "arraybuffer";
 		loadfile.send();
 

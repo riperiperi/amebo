@@ -215,12 +215,11 @@ window.gb = function(file, canvas, options) {
 	loadbios.responseType = "arraybuffer";
 	loadbios.send();
 	loadbios.onload = function() {
-		bios = new Uint8Array(loadbios.response);
+		if (loadbios.status == 200) bios = new Uint8Array(loadbios.response);
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}
 	loadbios.onerror = function() {
-		bios = null;
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}
@@ -230,12 +229,11 @@ window.gb = function(file, canvas, options) {
 	loadCGBbios.responseType = "arraybuffer";
 	loadCGBbios.send();
 	loadCGBbios.onload = function() {
-		CGBbios = new Uint8Array(loadCGBbios.response);
+		if (loadCGBbios.status == 200) CGBbios = new Uint8Array(loadCGBbios.response);
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}
 	loadCGBbios.onerror = function() {
-		CGBbios = null;
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}

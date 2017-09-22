@@ -1,0 +1,282 @@
+#editContainer {
+	width: 994px;
+	height: 738px;
+	padding: 15px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#rightContainer {
+	margin-left: 676px;
+	position: absolute;
+}
+
+#editGameboy {
+	margin-top: 1px;
+	position: absolute;
+	width: 320px;
+	height: 288px;
+	box-shadow: 0px 0px 0px 1px #272822;
+	/* outline: 1px solid #272822; */
+}
+#footerLine {
+	width: 100px;
+	height: 1px;
+	background-color: #979986;
+	margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+}
+#footer {
+	width: 1014px;
+	padding: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	font-size: 15px;
+	color: #5F5F52;
+}
+
+#editHeader{
+	height: 79px;
+	width: 994px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#projName {
+	font-size: 47px;
+	font-weight: bold;
+	color: #262721;
+	height: 65px;
+}
+
+#projAuthor {
+	font-size: 18px;
+	color: #797C6B;
+	margin-top: -13px;
+	margin-left: 2px;
+}
+
+#codeContainer {
+	width: 663px;
+	height: 712px;
+	-webkit-border-radius: 7px;
+	-webkit-border-top-left-radius: 0;
+	-moz-border-radius: 7px;
+	-moz-border-radius-topleft: 0;
+	border-radius: 7px;
+	border-top-left-radius: 0;
+	position: absolute;
+	overflow: hidden;
+}
+
+.editTab {
+	width: 145px;
+	height: 26px;
+	background-color: #272822;
+	font-size: 19px;
+	text-align: center;
+	display: inline-block;
+	color: white;
+	padding-top: 2px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.consoleTab {
+	width: 100px;
+	height: 28px;
+	background-color: #272822;
+	font-size: 18px;
+	text-align: center;
+	display: inline-block;
+	color: white;
+	vertical-align: top;
+}
+
+.cTabS0 {
+	width: 77px;
+	height: 21px;
+	font-size: 13.5px;
+	background-color: #45473D;
+	box-shadow: inset 4px 0px 0px 0px rgba(39, 40, 34, 0.33);
+	margin-top: 7px;
+}
+
+.cTabS1 {
+	width: 77px;
+	height: 23px;
+	font-size: 13.5px;
+	background-color: #626556;
+	margin-top: 5px;
+}
+
+#consoleTabCont {
+	margin-top: 418px;
+	margin-left: -1px;
+	width: 320px;
+	position: absolute;
+}
+
+#codeContainer .CodeMirror-wrap {
+	height: 712px;
+	width: 662px;
+	position: absolute;
+}
+
+#compileBut {
+	position: absolute;
+	margin-top: 296px;
+	margin-left: -1px;
+	background-image: url("/images/editor/compile.png");
+	width: 141px;
+	height: 28px;
+}
+
+#stepBut {
+	position: absolute;
+	margin-top: 296px;
+	margin-left: 255px;
+	background-image: url("/images/editor/step.png");
+	width: 69px;
+	height: 28px;
+}
+
+#console {
+	background-color: #272822;
+	width: 320px;
+	height: 240px;
+	outline: 1px solid #272822;
+	margin-top: 446px;
+	position: absolute;
+}
+
+#consoleIn {
+	border: 0;
+	padding: 1px 0px;
+	margin: 0;
+	border-top: 2px solid #56594C;
+	background-color: #626556;
+	/* outline: 3px solid #84B542; 
+			Outline not used because of firefox bug.
+	*/
+	margin-top: 689px;
+	position: absolute;
+	width: 320px;
+	font-size: 14px;
+	text-indent: 16px;
+	color: white;
+	background-image: url("/images/editor/consolearrow.svg");
+	background-repeat: no-repeat;
+	box-shadow: 0px 0px 0px 3px #84B542, 0px 2px 0px 3px rgba(0, 0, 0, 0.12);
+
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+#consoleIn:focus {
+	border-top: 2px solid #56594C;
+	/* outline: 3px solid #DEB508;
+	outline-offset: 0; */
+	box-shadow: 0px 0px 0px 3px #DEB508, 0px 2px 0px 3px rgba(0, 0, 0, 0.12);
+	
+}
+
+.imgBut {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background-color: none;
+}
+
+.cNote {
+	line-height: 20px;
+	font-size: 15px;
+	text-indent: 22px;
+	padding: 0px 3px;
+	background-repeat: no-repeat;
+	background-position: 4px 2px;
+}
+
+.cErr {
+	background-image: url("/images/editor/console/err.svg");
+	color: #BD1052;
+}
+
+.cWarn {
+	background-image: url("/images/editor/console/warn.svg");
+	color: #DEB407;
+}
+
+.cYes {
+	background-image: url("/images/editor/console/yes.svg");
+	color: #84B542;
+}
+
+.cInfo {
+	background-image: url("/images/editor/console/info.svg");
+	color: #9696CB;
+}
+
+.cComp {
+	background-image: url("/images/editor/console/comp.svg");
+	color: #109B93;
+}
+
+.cGen {
+	text-indent: 0px;
+	color: #969889
+}
+
+#consoleTcont {
+	display: inline-block;
+	vertical-align: bottom;
+}
+
+#consoleForceBotAlign {
+	height: 240px;
+	display: inline-block;
+}
+
+#consoleScroll {
+	min-height: 240px;
+	background-image: url("/images/editor/consolebg.png");
+}
+
+.titleDivider {
+	/* colorzilla generated codes goooooooooooooooo */
+	background: -moz-linear-gradient(top, rgba(0,0,0,0.26) 0%, rgba(0,0,0,0) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.26)), color-stop(100%,rgba(0,0,0,0))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(0,0,0,0.26) 0%,rgba(0,0,0,0) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(0,0,0,0.26) 0%,rgba(0,0,0,0) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, rgba(0,0,0,0.26) 0%,rgba(0,0,0,0) 100%); /* IE10+ */
+	background: linear-gradient(to bottom, rgba(0,0,0,0.26) 0%,rgba(0,0,0,0) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#42000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
+	width: 662px;
+	height: 18px;
+}
+
+.editTitle {
+	font-size: 47px;
+	color: white;
+	height: 69px;
+	margin-left: 25px;
+	font-weight: bold;
+	padding-top: 5px;
+}
+
+.editBox {
+	height: 712px;
+	width: 662px;
+	background-color: #272822;
+	position: absolute;
+	z-index: 50;
+}
+
+a {
+	color: #006699;
+}

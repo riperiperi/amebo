@@ -219,6 +219,11 @@ window.gb = function(file, canvas, options) {
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}
+	loadbios.onerror = function() {
+		bios = null;
+		biosLoaded++;
+		if (gameLoaded && (biosLoaded == 2)) init();
+	}
 
 	var loadCGBbios = new XMLHttpRequest();
 	loadCGBbios.open("GET", options.rootDir+"gbcbios.bin");
@@ -226,6 +231,11 @@ window.gb = function(file, canvas, options) {
 	loadCGBbios.send();
 	loadCGBbios.onload = function() {
 		CGBbios = new Uint8Array(loadCGBbios.response);
+		biosLoaded++;
+		if (gameLoaded && (biosLoaded == 2)) init();
+	}
+	loadCGBbios.onerror = function() {
+		CGBbios = null;
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}
@@ -1884,17 +1894,19 @@ window.gb = function(file, canvas, options) {
 				srcPos: 0,
 				destPos: 0
 			}
+			biosActive = (CGBbios != null);
 		} else {
 			CGBDMA = {active: false}
+			biosActive = (bios != null);
 		}
 		registers = new Uint8Array([0, 0, 0, 0, 0, 0, 0]) //A, B, C, D, E, H, L
 		flags = [0, 0, 0, 0, 1] //Z, N, H, C, true (for non conditional jumps)
 		SP = 0;
-		PC = 0;
+		PC = (biosActive)?0:0x100;
+		IORAM[0x44] = (biosActive)?0:((CGB)?144:153);
 		Cycles = 0;
 		LCDstate = 2;
 		IME = false; //interrupt master enable
-		biosActive = true;
 		halted = false;
 		palettes = new Uint8Array(readDMGPalette(0).concat(readDMGPalette(1), readDMGPalette(2)));
 		palettesInt32 = new Uint32Array(palettes.buffer);

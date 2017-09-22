@@ -1,0 +1,33 @@
+<?xml version="1.0" standalone="no"?>
+<!-- Generator: Adobe Fireworks 10, Export SVG Extension by Aaron Beall (http://fireworks.abeall.com) . Version: 0.6.1  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg id="indent.fw-Page%201" viewBox="0 0 165 148" style="background-color:#ffffff00" version="1.1"
+	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+	x="0px" y="0px" width="165px" height="148px"
+>
+	<defs>
+		<linearGradient id="gradient1" x1="100%" y1="7.0946%" x2="25%" y2="7.0946%">
+			<stop stop-color="#000000" stop-opacity="1" offset="0%"/>
+			<stop stop-color="#000000" stop-opacity="0" offset="100%"/>
+		</linearGradient>
+		<linearGradient id="gradient2" x1="0%" y1="7.0946%" x2="75%" y2="7.0946%">
+			<stop stop-color="#000000" stop-opacity="1" offset="0%"/>
+			<stop stop-color="#000000" stop-opacity="0" offset="100%"/>
+		</linearGradient>
+		<linearGradient id="gradient3" x1="99.6105%" y1="0%" x2="99.6105%" y2="75%">
+			<stop stop-color="#000000" stop-opacity="1" offset="0%"/>
+			<stop stop-color="#000000" stop-opacity="0" offset="100%"/>
+		</linearGradient>
+		<linearGradient id="gradient4" x1="99.6105%" y1="100%" x2="99.6105%" y2="25%">
+			<stop stop-color="#000000" stop-opacity="1" offset="0%"/>
+			<stop stop-color="#000000" stop-opacity="0" offset="100%"/>
+		</linearGradient>
+	</defs>
+	<g id="Layer%201">
+		<rect opacity="0.2784" x="0" y="0" width="165" height="148" fill="#000000" rx="1.48" ry="1.48"/>
+		<path opacity="0.2588" d="M 163.52 0 L 162.5 0 L 162.5 148 L 163.52 148 C 164.3374 148 165 147.3374 165 146.52 L 165 1.48 C 165 0.6626 164.3374 0 163.52 0 Z" fill="url(#gradient1)"/>
+		<path opacity="0.2588" d="M 1.48 0 L 2.5 0 L 2.5 148 L 1.48 148 C 0.6626 148 0 147.3374 0 146.52 L 0 1.48 C 0 0.6626 0.6626 0 1.48 0 Z" fill="url(#gradient2)"/>
+		<path opacity="0.2588" d="M 163.52 0 L 1.48 0 C 0.6626 0 0 0.6626 0 1.48 L 0 2.5 L 165 2.5 L 165 1.48 C 165 0.6626 164.3374 0 163.52 0 Z" fill="url(#gradient3)"/>
+		<path opacity="0.2588" d="M 163.52 148 L 1.48 148 C 0.6626 148 0 147.3374 0 146.52 L 0 145.5 L 165 145.5 L 165 146.52 C 165 147.3374 164.3374 148 163.52 148 Z" fill="url(#gradient4)"/>
+	</g>
+</svg>

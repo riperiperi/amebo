@@ -1,0 +1,21 @@
+<?xml version="1.0" standalone="no"?>
+<!-- Generator: Adobe Fireworks 10, Export SVG Extension by Aaron Beall (http://fireworks.abeall.com) . Version: 0.6.1  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg id="editIconsPNG.fw-Page%201%20Copy" viewBox="0 0 70 50" style="background-color:#ffffff00" version="1.1"
+	xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve"
+	x="0px" y="0px" width="70px" height="50px"
+>
+	<defs>
+		<linearGradient id="gradient1" x1="85.7143%" y1="48.9796%" x2="0.3571%" y2="48.9796%">
+			<stop stop-color="#ffffff" stop-opacity="1" offset="0%"/>
+			<stop stop-color="#ffffff" stop-opacity="1" offset="57.2222%"/>
+			<stop stop-color="#ffffff" stop-opacity="0" offset="100%"/>
+		</linearGradient>
+	</defs>
+	<g id="Layer%201">
+		<rect x="0" y="1" width="70" height="49" fill="url(#gradient1)"/>
+	</g>
+	<g id="Layer%202">
+		<path d="M 57.4375 24.9375 C 57.4375 18.3125 52.1875 12.5625 44.9375 12.5625 C 39.5625 12.5625 33.8125 15.9375 32.5625 23.5625 L 32.5625 26.4375 C 32.5625 26.6875 32.8125 28.3125 33.1875 29.1875 C 35.6875 35.1875 40.5625 37.4375 44.9375 37.4375 C 51.5625 37.4375 57.4375 32.1875 57.4375 24.9375 ZM 56.4375 24.9375 C 56.4375 31.1875 51.1875 36.4375 45.0625 36.4375 C 38.6875 36.4375 33.5625 31.1875 33.5625 24.9375 C 33.5625 18.6875 38.6875 13.5625 44.9375 13.5625 C 51.1875 13.5625 56.4375 18.6875 56.4375 24.9375 ZM 50.5 23 L 50.5 27.5 L 44.5 26.5 L 45 29.5 L 39 25 L 45 21 L 44.5 24 L 50.5 23 ZM 35.5 25 C 35.5 30.2468 39.7532 34.5 45 34.5 C 50.2468 34.5 54.5 30.2468 54.5 25 C 54.5 19.7532 50.2468 15.5 45 15.5 C 39.7532 15.5 35.5 19.7532 35.5 25 Z" fill="#009489"/>
+	</g>
+</svg>

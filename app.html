@@ -3,21 +3,14 @@
 	<script src="amebo.js"></script>
 	<script src="appcontroller.js"></script>
 	<script src="iosJSnode.js"></script>
-	<meta name="description" content="Javascript Gameboy Colour Emulator with sound, save functionality and (eventually) a gameboy IDE!">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<script>window.onload = function(){
-		var gb = window.addGB(document.getElementById("gameboys"));
-		gb.GUI.zoom = 4;
-		setZoom(gb);
-	};
-	</script>
+	
+	<link rel="stylesheet" type="text/css" href="main.css">
+
 </head>
 <body>
-
 	<div class="template">
 		<div id="carttmp" class="cartCtr cartHide">
 			<img src="images/cart.png" width="228px" height="255px" style="position:absolute">
-			<div id="sampleROM">Load a Sample ROM</div>
 			<div class="cartText" id="romname">No File Selected</div>
 			<div class="cartText" id="batteryname">Last Saved Battery</div>
 			<button id="romBut" class="cartBut"></button>
@@ -72,6 +65,4 @@
 
 	<div id="gameboys">
 	</div>
-
-	<div id="footer">amebo by <a href="https://twitter.com/RHY3756547">RHY3756547</a> - <a href="m.amebo-gb.tk">Mobile Web App</a> - GitHub Repo coming soon</div>
 </body>

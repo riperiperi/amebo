@@ -1,0 +1,35 @@
+// Default Control Scheme
+// ---------
+// By RHY3756547
+//
+// All sizes are in 0-100% of largest square that can fit in the screen.
+
+{
+
+	"images": [
+		"styles/default/abtn.svg",
+		"styles/default/bbtn.svg",
+		"styles/default/start.svg",
+		"styles/default/select.svg",
+		"styles/default/dpad.svg",
+		"styles/default/bg.svg",
+		"styles/default/menu.svg"
+	],
+
+	"landscape": [
+		{"type": "button", "x":-12, "y":45, "mask":16, "radius":17, "halign":"right", "image":0, "imgwidth":2, "imgheight"} // A Button
+		{"type": "button", "x":-29, "y":61, "mask":32, "radius":17, "halign":"right", "image":1} // B Button
+		{"type": "dpad", "x":, "y":53, "x":20, "radius":29, "halign":"left", "image":4,
+			"segments": [
+				{"mask":1, "start":0.7853981633974483, "end":2.356194490192345}, 	//start: (Math.PI/4), end: (3*Math.PI/4)
+				{"mask":2, "start":-2.356194490192345, "end":-0.7853981633974483}, 	//start: (3*Math.PI/(-4)), end: (Math.PI/(-4))
+				{"mask":4, "start":2.356194490192345, "end":200}, 					//start: (3*Math.PI/4), end: infinity
+				{"mask":4, "start":-200, "end":-2.356194490192345},					//start: -infinity, end: (3*Math.PI/(-4)) 
+				{"mask":8, "start":-0.7853981633974483, "end":0.7853981633974483} 	//start: (Math.PI/(-4)), end: (Math.PI/4)
+			]
+		}
+		{"type": "recbutton", "x":-21, "y":93, "imgwidth":18.33333333, "imgheight":8.33333333, "width": 40, "height":10, "halign":"right", "mask":128, "image":2} //start
+		{"type": "recbutton", "x":21, "y":93, "imgwidth":18.33333333, "imgheight":8.33333333, "width": 40, "height":10, "halign":"left", "mask":64, "image":3} //select
+		{"type": "specialbutton", "btype": "menu", "y":16, "x":-20, "image":6, "imgheight":16.6666667, "imgwidth":16.6666667}
+	]	
+}

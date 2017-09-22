@@ -1,0 +1,309 @@
+<title>Gameboy Thingy</title>
+<head>
+	<script src="amebo.js"></script>
+	<script src="iosJSnode.js"></script>
+	<style>
+	.gbsPlayer {
+		background-image: url("gbs/bg.svg");
+		width: 300px;
+		height: 30px;
+		position: relative;
+
+		font-family: "Trebuchet MS", sans-serif;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	.gbsPlay {
+		width: 18px;
+		height: 18px;
+		margin: 6px;
+	}
+
+	.gbsPause {
+		width: 18px;
+		height: 18px;
+		margin: 6px;
+	}
+
+	.gbsMarqueeContain {
+		width: 170px;
+		height: 30px;
+		display: inline-block;
+		overflow: hidden;
+	}
+
+	.gbsLeftBut {
+		width: 16px;
+		height: 16px;
+		margin-top: 7px;
+		vertical-align: top;
+	}
+
+	.gbsSelected {
+		width: 64px;
+		height: 26px;
+		margin-top: 4px;
+		display: inline-block;
+		color: #009388;
+		text-align: center;
+		vertical-align: top;
+	}
+
+	.gbsRightBut {
+		width: 16px;
+		height: 16px;
+		margin-top: 7px;
+		vertical-align: top;
+	}
+
+	.gbsMarqueeScroll {
+		height: 26px;
+		top: 4px;
+		position: relative;
+		white-space: nowrap;
+		width: auto;
+		max-width: 1000px;
+		display: inline-block;
+		padding-left: 8px;
+		padding-right: 8px;
+		color: #B90546
+	}
+
+	.gbsMarqueeTitle {
+		color: #5254A5;
+	}
+
+	.gbsMarqueeAuthor {
+		color: #79AD36;
+	}
+
+	.gbsMarqueeCopyright {
+		color: #DDB10A;
+	}
+
+	.gbsFadeover {
+		position: absolute;
+		margin-left: -170px;
+	}
+
+	#templates {
+		display: none;
+	}
+	</style>
+</head>
+<body onload="gbs = new gbsPlayer('crystal.gbs', null); document.getElementById('targetDiv').appendChild(gbs.element)">
+	<div id="templates">
+		<div class="gbsPlayer" id="playerTemplate">
+			<img src="gbs/play.svg" class="gbsPlay"><img src="gbs/pause.svg" class="gbsPause" style="display: none;"><div class="gbsMarqueeContain">
+			<div class="gbsMarqueeScroll"><span class="gbsMarqueeTitle">Pokemon Crystal</span> - <span class="gbsMarqueeAuthor">J. Masuda, M. Aoki, G. Ichinose</span> - <span class="gbsMarqueeCopyright">2000 Nintendo</span></div>
+			</div><img src="gbs/fadeover.svg" class="gbsFadeover"></img><img src="gbs/lefta.svg" class="gbsLeftBut"><div class="gbsSelected">24/100</div><img src="gbs/righta.svg" class="gbsRightBut">
+		</div>
+	</div>
+
+	<div id="targetDiv"></div>
+
+	<br>
+	ROM File:
+	<input type="file" id="file"></input>
+	<script>
+		function loadROMfileReader(evt) {
+			var file = evt.target.files[0];
+			var reader = new FileReader();
+			reader.onload = (function(theFile) {
+				return function(e) {
+					gbs.loadGBS(e.target.result);
+				};
+			})(file);
+			reader.readAsArrayBuffer(file);
+		}
+
+		document.getElementById("file").addEventListener('change', loadROMfileReader, false);
+
+
+		window.gbsPlayer = function(file, canvas, insertTarget) {
+			var gameboy = new gb(null, canvas, null);
+			this.gameboy = gameboy;
+
+			var version, numSongs, firstSong, loadAddr, initAddr, playAddr, stackP, timerM, timerC, useTimer, playerDOM, myOBJ, current = 0, marqueePercent=0;
+
+			var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
+										window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+			window.requestAnimationFrame = requestAnimationFrame;
+
+			this.title = "Not loaded";
+			this.author = "";
+			this.copyright = "";
+			this.numSongs = 0;
+			this.element = null; //add this somewhere on the page
+			myOBJ = this;
+
+			initDOM();
+
+			function initDOM() {
+				playerDOM = document.getElementById("playerTemplate").cloneNode(true);
+				myOBJ.element = playerDOM;
+				console.log(this.element);
+				playerDOM.getElementsByClassName("gbsLeftBut")[0].onclick = prevTrack;
+				playerDOM.getElementsByClassName("gbsRightBut")[0].onclick = nextTrack;
+
+				playerDOM.getElementsByClassName("gbsPlay")[0].onclick = cyclePause;
+				playerDOM.getElementsByClassName("gbsPause")[0].onclick = cyclePause;
+
+				updateMeta();
+
+				marqueeUpdate();
+			}
+
+			function cyclePause() {
+				gameboy.paused = !gameboy.paused;
+				updateSong();
+			}
+
+			function nextTrack() {
+				if (current+1<numSongs) {
+					myOBJ.chooseTrack(current+1);
+					updateSong();
+				}
+			}
+			function prevTrack() {
+				if (current>0) {
+					myOBJ.chooseTrack(current-1);
+					updateSong();
+				}
+			}
+
+			function marqueeUpdate() {
+				marqueePercent += 0.005;
+				var marquee = playerDOM.getElementsByClassName("gbsMarqueeScroll")[0];
+				var scrollWidth = -Math.max(0, marquee.clientWidth-170);
+				marquee.style.left = (scrollWidth*((1-Math.cos(marqueePercent))/2))+"px";
+
+				if (requestAnimationFrame != null) requestAnimationFrame(marqueeUpdate);
+				else setTimeout(marqueeUpdate, 16);
+			}
+
+			function updateMeta() {
+				playerDOM.getElementsByClassName("gbsMarqueeTitle")[0].innerText = myOBJ.title;
+				playerDOM.getElementsByClassName("gbsMarqueeAuthor")[0].innerText = myOBJ.author;
+				playerDOM.getElementsByClassName("gbsMarqueeCopyright")[0].innerText = myOBJ.copyright;
+			}
+
+			function updateSong() {
+				playerDOM.getElementsByClassName("gbsSelected")[0].innerText = (current+firstSong)+"/"+(numSongs);
+				playerDOM.getElementsByClassName("gbsLeftBut")[0].style.opacity = (current == 0)?0.33:1;
+				playerDOM.getElementsByClassName("gbsRightBut")[0].style.opacity = (current >= numSongs-1)?0.33:1;
+
+				playerDOM.getElementsByClassName("gbsPlay")[0].style.display = (gameboy.paused)?"inline":"none";
+				playerDOM.getElementsByClassName("gbsPause")[0].style.display = (gameboy.paused)?"none":"inline";
+			}
+
+			this.loadGBSurl = function(url) {
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", url);
+				xhr.responseType = "arraybuffer";
+				var parent = this;
+				xhr.onload = function() {
+					parent.loadGBS(xhr.response);
+				}
+				xhr.send();
+			}
+
+			this.loadGBS = function(data) {
+				var view = new DataView(data);
+				version = view.getUint8(3);
+				numSongs = view.getUint8(4);
+				firstSong = view.getUint8(5);
+				loadAddr = view.getUint16(6, true);
+				initAddr = view.getUint16(8, true);
+				playAddr = view.getUint16(10, true);
+
+				stackP = view.getUint16(12, true);
+				timerM = view.getUint8(14);
+				timerC = view.getUint8(15);
+
+				this.title = readString(view, 16, 32);
+				this.author = readString(view, 48, 32);
+				this.copyright = readString(view, 80, 32);
+				this.numSongs = 0;
+
+				updateMeta();
+
+				useTimer = (timerC & 4)>0;
+
+				gameboy.loadROMBuffer(data); //loads file, inits gb... We need a special mbc and full control though!
+
+				load();
+				init(17);
+			}
+
+			if (file != null) this.loadGBSurl(file);
+
+			function readString(view, off, length) {
+				var string = "";
+				for (var i=0; i<length; i++) {
+					var value = view.getUint8(off++);
+					if (value == 0) return string;
+					string += String.fromCharCode(value);
+				}
+				return string;
+			}
+
+			function init(num) {
+				current = num;
+				gameboy.scopeEval('registers = new Uint8Array(['+num+', 0, 0, 0, 0, 0, 0]);');
+				gameboy.scopeEval('RAM = new Uint8Array((CGB)?0x8000:0x2000);');
+				callGBFunction(initAddr);
+				updateSong();
+			}
+
+			function callGBFunction(addr) {
+				gameboy.scopeEval('StackPush(PC);');
+				gameboy.scopeEval('PC = '+(addr)+';');
+			}
+
+			function load() {
+				gameboy.scopeEval('CGB = true; reset(true); biosActive = false; CRAM = new Uint8Array(0x4000);');
+				gameboy.scopeEval('MBC = {type: 6, hardware: ["RAM"]}; this.MBC = MBC; MBC.ROMbank = 1; MBCReadHandler = MBCReadHandlers[6]; MBCWriteHandler = MBCWriteHandlers[6];');
+
+				gameboy.RSToff = loadAddr;
+				gameboy.MBC.lowData = new Array(0x400);
+				gameboy.MBC.lowData[0] = 0x76; //HALT
+				gameboy.MBC.lowData[1] = 0xFB; //EI
+				gameboy.MBC.lowData[2] = 0xC3; //jump back to halt
+
+				gameboy.MBC.lowData[0x40] = 0xC3; //jump to play address on vbl
+				gameboy.MBC.lowData[0x41] = playAddr&255;
+				gameboy.MBC.lowData[0x42] = playAddr>>8;
+
+				gameboy.MBC.lowData[0x50] = 0xC3; //same for timer
+				gameboy.MBC.lowData[0x51] = playAddr&255;
+				gameboy.MBC.lowData[0x52] = playAddr>>8;
+
+				//might want to have more substantial player code in future.
+
+				gameboy.scopeEval('MemWrite(0xFF06, '+timerM+');'); //write timer modulo
+				gameboy.scopeEval('MemWrite(0xFF07, '+(timerC&7)+');'); //write timer control
+				gameboy.scopeEval('MemWrite(0xFF26, 255);'); //sound on
+				gameboy.scopeEval('MemWrite(0xFF24, 255);'); //volume default to max
+				gameboy.scopeEval('SP = '+stackP)
+				gameboy.scopeEval('MBC.offset = '+loadAddr); 
+				gameboy.scopeEval('PC = 0; EI();');
+
+				if (timerC&128) gameboy.scopeEval('MemWrite(0xFF4D, 1); STOP();');
+
+				gameboy.scopeEval("IORAM[0x40] |= 0x80");
+				if (useTimer) {
+					gameboy.scopeEval('MemWrite(0xFFFF, 4);'); //enable timer interrupt
+				} else {
+					gameboy.scopeEval('MemWrite(0xFFFF, 1);'); //enable vbl interrupt
+				}
+			}
+
+			this.chooseTrack = function(track) {
+				load(); //do this to flush memory
+				init(track);
+			}
+		}
+	</script>
+</body>

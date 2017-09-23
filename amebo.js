@@ -1898,16 +1898,23 @@ window.gb = function(file, canvas, options) {
 			biosActive = (bios != null);
 			if (!biosActive) {
 				IORAM[0x70] = 1;
-				registers[0] = 17;
 			}
 		}
-		registers = new Uint8Array([0, 0, 0, 0, 0, 0, 0]) //A, B, C, D, E, H, L
-		flags = [0, 0, 0, 0, 1] //Z, N, H, C, true (for non conditional jumps)
+
 		SP = 0;
+		if (biosActive) {
+			registers = new Uint8Array([0, 0, 0, 0, 0, 0, 0]) //A, B, C, D, E, H, L
+		} else {
+			SP = 0xFFFE;
+			registers = new Uint8Array([CGB?17:1, 0, 0x13, 0, 0xD8, 0x01, 0x4D]) //A, B, C, D, E, H, L
+			IORAM[0x40] = 0x8F;
+		}
+		flags = [0, 0, 0, 0, 1] //Z, N, H, C, true (for non conditional jumps)
+
 		PC = (biosActive)?0:0x100;
 		IORAM[0x44] = (biosActive)?0:((CGB)?144:153);
 		Cycles = 0;
-		LCDstate = 2;
+		LCDstate = (biosActive)?1:2;
 		IME = false; //interrupt master enable
 		halted = false;
 		palettes = new Uint8Array(readDMGPalette(0).concat(readDMGPalette(1), readDMGPalette(2)));

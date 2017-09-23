@@ -1,4 +1,4 @@
-//amebo gameboy colour emulator by rhy3756547
+//amebo gameboy colour emulator by riperiperi
 //"use strict"; despite my code conforming to strict mode, i'll keep it off because it just adds stupid extra checks which might slow things down
 
 window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
@@ -1896,6 +1896,10 @@ window.gb = function(file, canvas, options) {
 		} else {
 			CGBDMA = {active: false}
 			biosActive = (bios != null);
+			if (!biosActive) {
+				IORAM[0x70] = 1;
+				registers[0] = 17;
+			}
 		}
 		registers = new Uint8Array([0, 0, 0, 0, 0, 0, 0]) //A, B, C, D, E, H, L
 		flags = [0, 0, 0, 0, 1] //Z, N, H, C, true (for non conditional jumps)

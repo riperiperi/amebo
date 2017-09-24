@@ -171,7 +171,7 @@ window.gb = function(file, canvas, options) {
 		source.buffer = buffer;
 
 		source.connect(GBAudioContext.destination);
-		source.noteOn(0);
+		source.start(0);
 
 	}, false);
 

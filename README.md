@@ -50,7 +50,7 @@ http://riperiperi.github.io/amebo/gbsplayer.html
 - Saves using localStorage
 - Cycle Accurate Instruction Timings
 - Realtime audio emulation using the Web Audio API
-- Mobile Client: http://riperiperi.github.io/amebo/mobile , runs full speed on iPhone 5 and up
+- Mobile Client: http://riperiperi.github.io/amebo/iphone.html , runs full speed on iPhone 5 and up
 - RUNS POKEMON! (obviously the most important feature)
 
 ## In future:

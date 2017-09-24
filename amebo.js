@@ -1907,7 +1907,7 @@ window.gb = function(file, canvas, options) {
 		} else {
 			SP = 0xFFFE;
 			registers = new Uint8Array([CGB?17:1, 0, 0x13, 0, 0xD8, 0x01, 0x4D]) //A, B, C, D, E, H, L
-			IORAM[0x40] = 0x8F;
+			IORAM[0x40] = 0x91;
 		}
 		flags = [0, 0, 0, 0, 1] //Z, N, H, C, true (for non conditional jumps)
 

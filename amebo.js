@@ -1548,7 +1548,8 @@ window.gb = function(file, canvas, options) {
 		var yfine = num-(OAM[sprOff]-16)
 		var bitmapPos = num*160
 		var behind = OAM[sprOff+3]&0x80
-		if ((yfine >= 0) && (((IORAM[0x40]&0x4)?16:8) > yfine)) {
+		var doubleHt = (IORAM[0x40]&0x4);
+		if ((yfine >= 0) && ((doubleHt?16:8) > yfine)) {
 			var sprFlags = OAM[sprOff+3]
 			if (CGB) {
 				var palettes = CGBInt32Spr
@@ -1556,8 +1557,10 @@ window.gb = function(file, canvas, options) {
 			} else {
 				var pnumoff = (((sprFlags&0x10)>>4)+1)*4;
 			}
-			if (sprFlags&0x40) yfine = ((IORAM[0x40]&0x4)?15:7)-yfine;
-			var tileOffset = OAM[sprOff+2]*16+yfine*2
+			if (sprFlags&0x40) yfine = (doubleHt?15:7)-yfine;
+			var sprTile = OAM[sprOff+2];
+			if (doubleHt) sprTile &= 0xFFFE;
+			var tileOffset = sprTile*16+yfine*2
 			var xfine = 0;
 			if (!(sprFlags&0x20)) { var xdraw = OAM[sprOff+1]-1; inc=-1; }
 			else { var xdraw = OAM[sprOff+1]-8; inc=1; }

@@ -1,4 +1,4 @@
-//amebo gameboy colour emulator by rhy3756547
+//amebo gameboy colour emulator by riperiperi
 //"use strict"; despite my code conforming to strict mode, i'll keep it off because it just adds stupid extra checks which might slow things down
 
 window.onerror = function myErrorHandler(errorMsg, url, lineNumber) {
@@ -66,7 +66,7 @@ window.gb = function(file, canvas, options) {
 
 	this.loadROM = function(url, pauseAfter) {
 		var loadfile = new XMLHttpRequest();
-		loadfile.open("POST", url);
+		loadfile.open("GET", url);
 		loadfile.responseType = "arraybuffer";
 		loadfile.send();
 
@@ -171,7 +171,7 @@ window.gb = function(file, canvas, options) {
 		source.buffer = buffer;
 
 		source.connect(GBAudioContext.destination);
-		source.noteOn(0);
+		source.start(0);
 
 	}, false);
 
@@ -215,12 +215,11 @@ window.gb = function(file, canvas, options) {
 	loadbios.responseType = "arraybuffer";
 	loadbios.send();
 	loadbios.onload = function() {
-		bios = new Uint8Array(loadbios.response);
+		if (loadbios.status == 200) bios = new Uint8Array(loadbios.response);
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}
 	loadbios.onerror = function() {
-		bios = null;
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}
@@ -230,12 +229,11 @@ window.gb = function(file, canvas, options) {
 	loadCGBbios.responseType = "arraybuffer";
 	loadCGBbios.send();
 	loadCGBbios.onload = function() {
-		CGBbios = new Uint8Array(loadCGBbios.response);
+		if (loadCGBbios.status == 200) CGBbios = new Uint8Array(loadCGBbios.response);
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}
 	loadCGBbios.onerror = function() {
-		CGBbios = null;
 		biosLoaded++;
 		if (gameLoaded && (biosLoaded == 2)) init();
 	}
@@ -1550,7 +1548,8 @@ window.gb = function(file, canvas, options) {
 		var yfine = num-(OAM[sprOff]-16)
 		var bitmapPos = num*160
 		var behind = OAM[sprOff+3]&0x80
-		if ((yfine >= 0) && (((IORAM[0x40]&0x4)?16:8) > yfine)) {
+		var doubleHt = (IORAM[0x40]&0x4);
+		if ((yfine >= 0) && ((doubleHt?16:8) > yfine)) {
 			var sprFlags = OAM[sprOff+3]
 			if (CGB) {
 				var palettes = CGBInt32Spr
@@ -1558,8 +1557,10 @@ window.gb = function(file, canvas, options) {
 			} else {
 				var pnumoff = (((sprFlags&0x10)>>4)+1)*4;
 			}
-			if (sprFlags&0x40) yfine = ((IORAM[0x40]&0x4)?15:7)-yfine;
-			var tileOffset = OAM[sprOff+2]*16+yfine*2
+			if (sprFlags&0x40) yfine = (doubleHt?15:7)-yfine;
+			var sprTile = OAM[sprOff+2];
+			if (doubleHt) sprTile &= 0xFFFE;
+			var tileOffset = sprTile*16+yfine*2
 			var xfine = 0;
 			if (!(sprFlags&0x20)) { var xdraw = OAM[sprOff+1]-1; inc=-1; }
 			else { var xdraw = OAM[sprOff+1]-8; inc=1; }
@@ -1898,14 +1899,25 @@ window.gb = function(file, canvas, options) {
 		} else {
 			CGBDMA = {active: false}
 			biosActive = (bios != null);
+			if (!biosActive) {
+				IORAM[0x70] = 1;
+			}
 		}
-		registers = new Uint8Array([0, 0, 0, 0, 0, 0, 0]) //A, B, C, D, E, H, L
-		flags = [0, 0, 0, 0, 1] //Z, N, H, C, true (for non conditional jumps)
+
 		SP = 0;
+		if (biosActive) {
+			registers = new Uint8Array([0, 0, 0, 0, 0, 0, 0]) //A, B, C, D, E, H, L
+		} else {
+			SP = 0xFFFE;
+			registers = new Uint8Array([CGB?17:1, 0, 0x13, 0, 0xD8, 0x01, 0x4D]) //A, B, C, D, E, H, L
+			IORAM[0x40] = 0x91;
+		}
+		flags = [0, 0, 0, 0, 1] //Z, N, H, C, true (for non conditional jumps)
+
 		PC = (biosActive)?0:0x100;
 		IORAM[0x44] = (biosActive)?0:((CGB)?144:153);
 		Cycles = 0;
-		LCDstate = 2;
+		LCDstate = (biosActive)?1:2;
 		IME = false; //interrupt master enable
 		halted = false;
 		palettes = new Uint8Array(readDMGPalette(0).concat(readDMGPalette(1), readDMGPalette(2)));

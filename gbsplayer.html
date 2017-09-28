@@ -204,6 +204,7 @@
 				xhr.responseType = "arraybuffer";
 				var parent = this;
 				xhr.onload = function() {
+					if (xhr.status != 200) return;
 					parent.loadGBS(xhr.response);
 				}
 				xhr.send();

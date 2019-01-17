@@ -165,7 +165,7 @@ window.gb = function(file, canvas, options) {
 	}
 
 	var dummySound = function() {
-
+		if (GBAudioContext.resume != null) GBAudioContext.resume();
 		var buffer = GBAudioContext.createBuffer(1, 1, 22050);
 		var source = GBAudioContext.createBufferSource();
 		source.buffer = buffer;

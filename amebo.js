@@ -175,8 +175,8 @@ window.gb = function(file, canvas, options) {
 
 	}
 	
-	window.addEventListener('touchstart', dummySound(), false);
-	window.addEventListener('mousedown', dummySound(), false);
+	window.addEventListener('touchstart', dummySound, false);
+	window.addEventListener('mousedown', dummySound, false);
 	
 	this.scopeEval = function(code) {return eval(code)}
 

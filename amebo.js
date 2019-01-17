@@ -164,7 +164,7 @@ window.gb = function(file, canvas, options) {
 		}
 	}
 
-	window.addEventListener('touchstart', function() {
+	var dummySound = function() {
 
 		var buffer = GBAudioContext.createBuffer(1, 1, 22050);
 		var source = GBAudioContext.createBufferSource();
@@ -173,8 +173,10 @@ window.gb = function(file, canvas, options) {
 		source.connect(GBAudioContext.destination);
 		source.start(0);
 
-	}, false);
-
+	}
+	
+	window.addEventListener('touchstart', dummySound(), false);
+	window.addEventListener('mousedown', dummySound(), false);
 	
 	this.scopeEval = function(code) {return eval(code)}
 
